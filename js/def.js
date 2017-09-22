@@ -22,6 +22,13 @@ var MAX_DEPTH = 64;
 var ColumnsBrd = new Array(BRD_SQ_NUM);
 var RowsBrd = new Array(BRD_SQ_NUM);
 
+var START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+
+var pieceChar = ".PNBRQKpnbrqk";
+var sideChar = "wb-";
+var rowChar = "12345678";
+var columnChar = "abcdefgh";
+
 //Squares starts at value 21
 //sets proper position for 120 sized board
 function colRowToSquares(col, row) {

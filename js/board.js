@@ -36,6 +36,56 @@ gameBoard.moveList = new Array(MAX_DEPTH * MAX_POSITION_MOVES);
 gameBoard.moveScores = new Array(MAX_DEPTH * MAX_POSITION_MOVES);
 gameBoard.moveListStart = new Array(MAX_DEPTH);
 
+//prints the board to the console for debugging purposes
+function printBoard()
+{
+  var square, col, row, piece;
+  console.log("\nGame Board:\n");
+
+  for (row = ROWS.ROW_8; row >= ROWS.ROW_1; row--)
+  {
+    var line = rowChar[row] + " ";
+    for (col = COLUMNS.COLUMN_A; col <= COLUMNS.COLUMN_H; col++)
+    {
+      square = colRowToSquares(col, row);
+      piece = gameBoard.pieces[square];
+      line += " " + pieceChar[piece] + " ";
+    }
+    console.log(line);
+  }
+
+  console.log("");
+  var line = "  ";
+  for (col = COLUMNS.COLUMN_A; col <= COLUMNS.COLUMN_H; col++)
+  {
+    line += ' ' + columnChar[col] + ' ';
+  }
+
+  console.log(line);
+  console.log("Side: " + sideChar[gameBoard.side]);
+  console.log("En Passant: " + gameBoard.enPas);
+  line = "";
+
+  if(gameBoard.castlePerm & CASTLEBIT.WKCA)
+  {
+    line += 'K';
+  }
+  if(gameBoard.castlePerm & CASTLEBIT.WQCA)
+  {
+    line += 'Q';
+  }
+  if(gameBoard.castlePerm & CASTLEBIT.BKCA)
+  {
+    line += 'k';
+  }
+  if(gameBoard.castlePerm & CASTLEBIT.BQCA)
+  {
+    line += 'q';
+  }
+  console.log("Castle: " + line);
+  console.log("Key: " + gameBoard.posKey.toString(16));
+}
+
 function generatePositionKey()
 {
   var finalKey = 0;
@@ -107,14 +157,14 @@ function resetBoard()
   gameBoard.moveListStart[gameBoard.play] = 0;
 }
 
-//starting fen
-// rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
+//starting fen ex.
+//rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 function parseFen(fen)
 {
   resetBoard();
 
   var row = ROWS.ROW_8;
-  varcol = COLUMNS.COLUMN_A;
+  var col = COLUMNS.COLUMN_A;
   var piece = 0;
   var count = 0;
   var i = 0;
@@ -160,19 +210,65 @@ function parseFen(fen)
       case '7':
       case '8':
                 piece = PIECES.EMPTY;
-                count = fen[fenCnt].charCodeAt() - '0'.charCodeAt();
+                count = fen[fenCount].charCodeAt() - '0'.charCodeAt();
                 break;
-
       case '/':
       case ' ':
-                rank--;
-                file = FILES.FILE_A;
-                fenCnt++;
+                row--;
+                col = COLUMNS.COLUMN_A;
+                fenCount++;
                 continue;
       default:
                 console.log("FEN error");
                 return;
     }
+
+    for (i = 0; i < count; i++)
+    {
+      square120 = colRowToSquares(col, row);
+      gameBoard.pieces[square120] = piece;
+      col++;
+    }
+    fenCount++;
+  } //while loop end
+
+  //which side moves next
+  gameBoard.side = (fen[fenCount] == 'w') ? PIECE_COLORS.WHITE : PIECE_COLORS.BLACK;
+  fenCount += 2;
+
+  //handles castling permission using bitwise |
+  for (i = 0; i < 4; i++)
+  {
+    if (fen[fenCount] == ' ')
+    {
+      break;
+    }
+    switch (fen[fenCount])
+    {
+      case 'K': gameBoard.castlePerm |= CASTLEBIT.WKCA;
+                break;
+      case 'Q': gameBoard.castlePerm |= CASTLEBIT.WQCA;
+                break;
+      case 'k': gameBoard.castlePerm |= CASTLEBIT.BKCA;
+                break;
+      case 'q': gameBoard.castlePerm |= CASTLEBIT.BQCA;
+                break;
+      default:
+                break;
+    }
+    fenCount++;
   }
 
+  //handles en passant
+  fenCount++;
+
+  if (fen[fenCount] != '-')
+  {
+    col = fen[fenCount].charCodeAt() - 'a'.charCodeAt();
+    row = fen[fenCount + 1].charCodeAt() - '1'.charCodeAt();
+    console.log("fen[fenCount]: " + fen[fenCount] + " Column: " + col + " Row: " + row);
+    gameBoard.enPas = colRowToSquares(col, row);
+  }
+
+  gameBoard.posKey = generatePositionKey();
 }
