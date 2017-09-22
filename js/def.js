@@ -15,6 +15,10 @@ var PIECE_COLORS = {WHITE : 0, BLACK : 1, BOTH : 2};
 var CASTLEBIT = {WKCA:1, WQCA:2, BKCA:4, BQCA:8};
 var BOOL = {FALSE:0, TRUE:1};
 
+var MAX_GAME_MOVES = 2048;
+var MAX_POSITION_MOVES = 256;
+var MAX_DEPTH = 64;
+
 var ColumnsBrd = new Array(BRD_SQ_NUM);
 var RowsBrd = new Array(BRD_SQ_NUM);
 
@@ -40,7 +44,9 @@ var PieceRookQueen = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE
 var PieceBishopQueen = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE ];
 var PieceSlides = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE ];
 
+//PIECE * 120 + square for index
 var pieceKeys = new Array(14 * 120);
+//XOR in or out depending on which side (white or black)
 var sideKey;
 var castleKeys = new Array(16);
 
@@ -51,7 +57,7 @@ function getBoard120(square64) { return board64ToBoard120[(square64)]; }
 
 //gives a random number for gameBoard.posKey
 //generates 4 numbers that each cover 8 bits and shifts them to the left to get a good coverage of 31 bits
-function() RAND_32()
+function RAND_32()
 {
   return (Math.floor((Math.random()*255)+1) << 23) | (Math.floor((Math.random()*255)+1) << 16)
         | (Math.floor((Math.random()*255)+1) << 8) | (Math.floor((Math.random()*255)+1));

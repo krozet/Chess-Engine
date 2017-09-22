@@ -58,9 +58,28 @@ function initBoard120ToBoard64()
 
 }
 
+//gives keys for pieceKeys, sideKey, and castleKeys
+function initHashKeys()
+{
+  var index = 0;
+
+  for (index = 0; index < 14 * 120; index++)
+  {
+    pieceKeys[index] = RAND_32();
+  }
+
+  sideKey = RAND_32();
+
+  for (index = 0; index < 16; index++)
+  {
+    castleKeys[index] = RAND_32();
+  }
+}
+
 function init()
 {
 
   console.log("init() called");
-    initFilesRanksBrd();
+  initFilesRanksBrd();
+  initHashKeys();
 }
