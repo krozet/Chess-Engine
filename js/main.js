@@ -25,9 +25,6 @@ function initFilesRanksBrd()
       RowsBrd[square] = row;
     }
   }
-  console.log("ColumnsBrd[0]:" + ColumnsBrd[0] + " RowsBrd[0]" + RowsBrd[0]);
-  console.log("ColumnsBrd[SQUARES.A1]:" + ColumnsBrd[SQUARES.A1] + " RowsBrd[SQUARES.A1]" + RowsBrd[SQUARES.A1]);
-  console.log("ColumnsBrd[SQUARES.E8]:" + ColumnsBrd[SQUARES.E8] + " RowsBrd[SQUARES.E8]" + RowsBrd[SQUARES.E8]);
 }
 
 function initBoard120ToBoard64()
@@ -80,8 +77,8 @@ function initHashKeys()
 
 function init()
 {
-
   console.log("init() called");
   initFilesRanksBrd();
   initHashKeys();
+  initBoard120ToBoard64();
 }

@@ -114,36 +114,52 @@ function generatePositionKey()
   return finalKey;
 }
 
+function updateListsMaterial()
+{
+    var piece, square, index, color;
+
+    for (index = 0; index < 14 * 120; index++)
+    {
+      //resets all the pieces to empty
+      gameBoard.pieceList[index] = PIECES.EMPTY;
+
+      //resets the piece number
+      if (index < 13)
+      {
+        gameBoard.pieceNum[index] = 0;
+      }
+
+      if (index < 2)
+      {
+        gameBoard.material[index] = 0;
+      }
+    }
+
+    for (index = 0; index < 64; index++)
+    {
+      square = getBoard120(index);
+      piece = gameBoard.pieces[square];
+      if(piece != PIECES.EMPTY)
+      {
+        console.log("Piece: " + piece + " on: " + square);
+        color = PieceCol[piece];
+        gameBoard.material[color] += PieceVal[piece];
+        gameBoard.pieceList[getPieceIndex(piece, gameBoard.pieceNum[piece])] = square;
+        gameBoard.pieceNum[piece]++;
+      }
+    }
+}
 function resetBoard()
 {
   var index = 0;
 
-  for (index = 0; index < 14 * 120; index++)
+  for (index = 0; index < BRD_SQ_NUM; index++)
   {
-    //resets all the pieces to empty
-    gameBoard.pieceList[index] = PIECES.EMPTY;
-
-    //takes care of 120 size board
-    if (index < BRD_SQ_NUM)
-    {
-      gameBoard.pieces[index] = SQUARES.OFFBOARD
-    }
-
+    gameBoard.pieces[index] = SQUARES.OFFBOARD;
     //takes care of the 64 size board
     if ( index < 64)
     {
       gameBoard.pieces[getBoard120(index)] = PIECES.EMPTY;
-    }
-
-    //resets the piece number
-    if (index < 13)
-    {
-      gameBoard.pieceNum[index] = 0;
-    }
-
-    if (index < 2)
-    {
-      gameBoard.material[index] = 0;
     }
   }
 
@@ -271,4 +287,5 @@ function parseFen(fen)
   }
 
   gameBoard.posKey = generatePositionKey();
+  updateListsMaterial();
 }

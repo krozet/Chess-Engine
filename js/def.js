@@ -59,8 +59,11 @@ var castleKeys = new Array(16);
 
 var board120ToBoard64 = new Array(BRD_SQ_NUM);
 var board64ToBoard120 = new Array(64);
-function getBoard64(square120) { return board120ToBoard64[(square120)]; }
-function getBoard120(square64) { return board64ToBoard120[(square64)]; }
+function getBoard64(square120) { return board120ToBoard64[square120]; }
+//SQ120
+function getBoard120(square64) { return board64ToBoard120[square64]; }
+
+function pieceIndex(piece, pieceNum) { return (piece * 10 + pieceNum); }
 
 //gives a random number for gameBoard.posKey
 //generates 4 numbers that each cover 8 bits and shifts them to the left to get a good coverage of 31 bits
