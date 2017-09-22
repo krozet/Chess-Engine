@@ -27,6 +27,37 @@ function initFilesRanksBrd()
   console.log("ColumnsBrd[SQUARES.A1]:" + ColumnsBrd[SQUARES.A1] + " RowsBrd[SQUARES.A1]" + RowsBrd[SQUARES.A1]);
   console.log("ColumnsBrd[SQUARES.E8]:" + ColumnsBrd[SQUARES.E8] + " RowsBrd[SQUARES.E8]" + RowsBrd[SQUARES.E8]);
 }
+
+function initBoard120ToBoard64()
+{
+    var index = 0;
+    var square64 = 0;
+
+    ///sets values that should never be returned if operated correctly
+    for (index = 0; index < BRD_SQ_NUM; index++)
+    {
+      board120ToBoard64[index] = 65;
+    }
+    for (index = 0; index < 64; index++)
+    {
+      board64ToBoard120[index] = 120;
+    }
+
+    //walks up the 120 sized board while setting its values and sets correct values for 64 sized board
+    for (var row = ROWS.ROW_1; row <= ROWS.ROW_8; row++)
+    {
+      for (var col = COLUMNS.COLUMN_A; col <= COLUMNS.COLUMN_H; col++)
+      {
+        var square120 = colRowToSquares(col, row);
+        board64ToBoard120[square64] = square120;
+        board120ToBoard64[square120] = square64;
+        square64++;
+      }
+    }
+
+
+}
+
 function init()
 {
 
