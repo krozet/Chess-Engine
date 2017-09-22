@@ -66,48 +66,113 @@ function generatePositionKey()
 
 function resetBoard()
 {
-    var index = 0;
+  var index = 0;
 
-    for (index = 0; index < 14 * 120; index++)
+  for (index = 0; index < 14 * 120; index++)
+  {
+    //resets all the pieces to empty
+    gameBoard.pieceList[index] = PIECES.EMPTY;
+
+    //takes care of 120 size board
+    if (index < BRD_SQ_NUM)
     {
-      //resets all the pieces to empty
-      gameBoard.pieceList[index] = PIECES.EMPTY;
-
-      //takes care of 120 size board
-      if (index < BRD_SQ_NUM)
-      {
-        gameBoard.pieces[index] = SQUARES.OFFBOARD
-      }
-
-      //takes care of the 64 size board
-      if ( index < 64)
-      {
-        gameBoard.pieces[getBoard120(index)] = PIECES.EMPTY;
-      }
-
-      //resets the piece number
-      if (index < 13)
-      {
-        gameBoard.pieceNum[index] = 0;
-      }
-
-      if (index < 2)
-      {
-        gameBoard.material[index] = 0;
-      }
+      gameBoard.pieces[index] = SQUARES.OFFBOARD
     }
 
-    gameBoard.side = PIECE_COLORS.BOTH;
-    gameBoard.enPas = SQUARES.NO_SQ;
-    gameBoard.fiftyMove = 0;
-    gameBoard.play = 0;
-    gameBoard.hisPlay = 0;
-    gameBoard.castlePerm = 0;
-    gameBoard.posKey = 0;
-    gameBoard.moveListStart[gameBoard.play] = 0;
+    //takes care of the 64 size board
+    if ( index < 64)
+    {
+      gameBoard.pieces[getBoard120(index)] = PIECES.EMPTY;
+    }
+
+    //resets the piece number
+    if (index < 13)
+    {
+      gameBoard.pieceNum[index] = 0;
+    }
+
+    if (index < 2)
+    {
+      gameBoard.material[index] = 0;
+    }
+  }
+
+  gameBoard.side = PIECE_COLORS.BOTH;
+  gameBoard.enPas = SQUARES.NO_SQ;
+  gameBoard.fiftyMove = 0;
+  gameBoard.play = 0;
+  gameBoard.hisPlay = 0;
+  gameBoard.castlePerm = 0;
+  gameBoard.posKey = 0;
+  gameBoard.moveListStart[gameBoard.play] = 0;
 }
 
+//starting fen
+// rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
 function parseFen(fen)
 {
   resetBoard();
+
+  var row = ROWS.ROW_8;
+  varcol = COLUMNS.COLUMN_A;
+  var piece = 0;
+  var count = 0;
+  var i = 0;
+  var square120 = 0;
+  var fenCount = 0;
+
+  while ((row >= ROWS.ROW_1) && fenCount < fen.length)
+  {
+    count = 1;
+    switch (fen[fenCount])
+    {
+      case 'p': piece = PIECES.bP;
+                break;
+      case 'r': piece = PIECES.bR;
+                break;
+      case 'n': piece = PIECES.bN;
+                break;
+      case 'b': piece = PIECES.bB;
+                break;
+      case 'k': piece = PIECES.bK;
+                break;
+      case 'q': piece = PIECES.bQ;
+                break;
+      case 'P': piece = PIECES.wP;
+                break;
+      case 'R': piece = PIECES.wR;
+                break;
+      case 'N': piece = PIECES.wN;
+                break;
+      case 'B': piece = PIECES.wB;
+                break;
+      case 'K': piece = PIECES.wK;
+                break;
+      case 'Q': piece = PIECES.wQ;
+                break;
+
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+                piece = PIECES.EMPTY;
+                count = fen[fenCnt].charCodeAt() - '0'.charCodeAt();
+                break;
+
+      case '/':
+      case ' ':
+                rank--;
+                file = FILES.FILE_A;
+                fenCnt++;
+                continue;
+      default:
+                console.log("FEN error");
+                return;
+    }
+  }
+
 }
