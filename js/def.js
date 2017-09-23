@@ -54,7 +54,7 @@ var PieceSlides = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BO
 var knightDirection = [ -8, -19, -21, -12, 8, 19, 21, 12];
 var rookDirection = [-1, -10, 1, 10];
 var bishopDirection = [-9, -11, 11, 9];
-var kingDirection = [-1, -10, 1, 10, -9, -11, 11 9];
+var kingDirection = [-1, -10, 1, 10, -9, -11, 11, 9];
 
 //PIECE * 120 + square for index
 var pieceKeys = new Array(14 * 120);

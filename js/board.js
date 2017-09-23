@@ -159,7 +159,6 @@ function updateListsMaterial()
         gameBoard.pieceNum[piece]++;
       }
     }
-    printPieceLists();
 }
 function resetBoard()
 {
@@ -300,7 +299,28 @@ function parseFen(fen)
 
   gameBoard.posKey = generatePositionKey();
   updateListsMaterial();
-  squareAttacked(21, 0);
+  printSquareAttacked();
+}
+
+function printSquareAttacked() {
+
+	var square, col, row, piece;
+
+	console.log("\nAttacked:\n");
+
+	for(row = ROWS.ROW_8; row >= ROWS.ROW_1; row--) {
+		var line =((row+1) + "  ");
+		for(col = COLUMNS.COLUMN_A; col <= COLUMNS.COLUMN_H; col++) {
+			square = colRowToSquares(col, row);
+			if(squareAttacked(square, gameBoard.side) == BOOL.TRUE) piece = "X";
+			else piece = "-";
+			line += (" " + piece + " ");
+		}
+		console.log(line);
+	}
+
+	console.log("");
+
 }
 
 function squareAttacked(square, side) {
@@ -329,7 +349,7 @@ function squareAttacked(square, side) {
     }
   }
 
-  //rook attack
+  //rook & queen attack
   for (index = 0; index < 4; index++)
   {
     var dir = rookDirection[index];
@@ -350,7 +370,7 @@ function squareAttacked(square, side) {
     }
   }
 
-  //bishop attack
+  //bishop & queen attack
   for (index = 0; index < 4; index++)
   {
     var dir = bishopDirection[index];
