@@ -114,6 +114,18 @@ function generatePositionKey()
   return finalKey;
 }
 
+function printPieceLists() {
+  var piece, pceNum;
+
+  for (piece = PIECES.wP; piece <= PIECES.bK; piece++)
+  {
+    for (pceNum = 0; pceNum < gameBoard.pieceNum[piece]; pceNum++)
+    {
+      console.log("Piece " + pieceChar[piece] + " on " + printSquare(gameBoard.pieceList[pieceIndex(piece, pceNum)]));
+    }
+  }
+}
+
 function updateListsMaterial()
 {
     var piece, square, index, color;
@@ -141,13 +153,13 @@ function updateListsMaterial()
       piece = gameBoard.pieces[square];
       if(piece != PIECES.EMPTY)
       {
-        console.log("Piece: " + piece + " on: " + square);
         color = PieceCol[piece];
         gameBoard.material[color] += PieceVal[piece];
         gameBoard.pieceList[getPieceIndex(piece, gameBoard.pieceNum[piece])] = square;
         gameBoard.pieceNum[piece]++;
       }
     }
+    printPieceLists();
 }
 function resetBoard()
 {
