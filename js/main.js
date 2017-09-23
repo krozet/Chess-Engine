@@ -6,7 +6,7 @@ $(function()
   printBoard();
 });
 
-function initFilesRanksBrd()
+function initColumnsRowsBrd()
 {
   ///board initialization
   //sets boundries
@@ -78,7 +78,7 @@ function initHashKeys()
 function init()
 {
   console.log("init() called");
-  initFilesRanksBrd();
+  initColumnsRowsBrd();
   initHashKeys();
   initBoard120ToBoard64();
 }

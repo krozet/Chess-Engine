@@ -300,4 +300,86 @@ function parseFen(fen)
 
   gameBoard.posKey = generatePositionKey();
   updateListsMaterial();
+  squareAttacked(21, 0);
+}
+
+function squareAttacked(square, side) {
+  var piece, t_square, index;
+
+  //pawn attack
+  if(side == PIECE_COLORS.WHITE)
+  {
+    if (gameBoard.pieces[square - 11] == PIECES.wP || gameBoard.pieces[square - 9] == PIECES.wP)
+    return BOOL.TRUE;
+  } else {
+    if(side == PIECE_COLORS.BLACK)
+    {
+      if (gameBoard.pieces[square + 11] == PIECES.bP || gameBoard.pieces[square + 9] == PIECES.bP)
+      return BOOL.TRUE;
+    }
+  }
+
+  //knight attack
+  for (index = 0; index < 8; index++)
+  {
+    piece = gameBoard.pieces[square + knightDirection[index]];
+    if (piece != SQUARES.OFFBOARD && PieceCol[piece] == side && PieceKnight[piece] == BOOL.TRUE)
+    {
+      return BOOL.TRUE;
+    }
+  }
+
+  //rook attack
+  for (index = 0; index < 4; index++)
+  {
+    var dir = rookDirection[index];
+    t_square = square + dir;
+    piece = gameBoard.pieces[t_square];
+    while (piece != SQUARES.OFFBOARD)
+    {
+      if (piece != PIECES.EMPTY)
+      {
+        if (PieceRookQueen[piece] == BOOL.TRUE && PieceCol[piece] == side)
+        {
+          return BOOL.TRUE;
+        }
+        break;
+      }
+      t_square += dir;
+      piece = gameBoard.pieces[t_square];
+    }
+  }
+
+  //bishop attack
+  for (index = 0; index < 4; index++)
+  {
+    var dir = bishopDirection[index];
+    t_square = square + dir;
+    piece = gameBoard.pieces[t_square];
+    while (piece != SQUARES.OFFBOARD)
+    {
+      if (piece != PIECES.EMPTY)
+      {
+        if (PieceBishopQueen[piece] == BOOL.TRUE && PieceCol[piece] == side)
+        {
+          return BOOL.TRUE;
+        }
+        break;
+      }
+      t_square += dir;
+      piece = gameBoard.pieces[t_square];
+    }
+  }
+
+  //king attack
+  for (index = 0; index < 8; index++)
+  {
+    piece = gameBoard.pieces[square + kingDirection[index]];
+    if (piece != SQUARES.OFFBOARD && PieceCol[piece] == side && PieceKing[piece] == BOOL.TRUE)
+    {
+      return BOOL.TRUE;
+    }
+  }
+  return BOOL.FALSE;
+
 }

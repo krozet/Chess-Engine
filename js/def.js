@@ -51,6 +51,11 @@ var PieceRookQueen = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE
 var PieceBishopQueen = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE, BOOL.TRUE, BOOL.FALSE ];
 var PieceSlides = [ BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE, BOOL.FALSE, BOOL.FALSE, BOOL.TRUE, BOOL.TRUE, BOOL.TRUE, BOOL.FALSE ];
 
+var knightDirection = [ -8, -19, -21, -12, 8, 19, 21, 12];
+var rookDirection = [-1, -10, 1, 10];
+var bishopDirection = [-9, -11, 11, 9];
+var kingDirection = [-1, -10, 1, 10, -9, -11, 11 9];
+
 //PIECE * 120 + square for index
 var pieceKeys = new Array(14 * 120);
 //XOR in or out depending on which side (white or black)
