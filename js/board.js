@@ -302,6 +302,7 @@ function parseFen(fen)
   printSquareAttacked();
 }
 
+//prints squares attacked for deg=bugging purposes
 function printSquareAttacked() {
 
 	var square, col, row, piece;
