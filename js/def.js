@@ -56,6 +56,11 @@ var rookDirection = [-1, -10, 1, 10];
 var bishopDirection = [-9, -11, 11, 9];
 var kingDirection = [-1, -10, 1, 10, -9, -11, 11, 9];
 
+//direction number by piece type, EMPTY, wP, WN, wB, wR, wQ, wK, bP, bN, bB, bR, bQ, bK
+var directionNum = [0 , 0, 8, 4, 4, 8, 8, 0, 8, 4, 4, 8, 8];
+var pieceDirection = [0, 0, knightDirection, bishopDirection, rookDirection, kingDirection, kingDirection, 0, knightDirection, bishopDirection, rookDirection, kingDirection, kingDirection];
+var loopNonSlidePiece = [PIECES.wN, PIECES.wK, 0, PIECES.bN, PIECES.bK, 0];
+var loopNonSlideIndex = [0, 3];
 //PIECE * 120 + square for index
 var pieceKeys = new Array(14 * 120);
 //XOR in or out depending on which side (white or black)
@@ -104,3 +109,10 @@ var moveFlagCapture = 0x7C000;
 var moveFlagPromoted = 0xF00000;
 
 var NOMOVE = 0;
+
+function squareOffBoard(square) {
+  if (ColumnsBrd[square] == SQUARES.OFFBOARD) {
+    return BOOL.TRUE;
+  }
+  return BOOL.FALSE;
+}

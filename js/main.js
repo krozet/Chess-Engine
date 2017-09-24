@@ -4,6 +4,7 @@ $(function()
   console.log("Main Init Called");
   parseFen(START_FEN);
   printBoard();
+  generateMoves();
 });
 
 function initColumnsRowsBrd()
