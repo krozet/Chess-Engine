@@ -31,9 +31,10 @@ gameBoard.pieceNum = new Array(13);
 gameBoard.pieceList = new Array(14 * 10);
 //unique position key used to detect a draw based on repetition
 gameBoard.posKey = 0;
-
+//uses index from moveListStart to access a certain move
 gameBoard.moveList = new Array(MAX_DEPTH * MAX_POSITION_MOVES);
 gameBoard.moveScores = new Array(MAX_DEPTH * MAX_POSITION_MOVES);
+//index for the first move at a given play
 gameBoard.moveListStart = new Array(MAX_DEPTH);
 
 //prints the board to the console for debugging purposes
