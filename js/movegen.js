@@ -20,7 +20,7 @@ function move(from, to, captured, promoted, flag)
 function generateMoves() {
     gameBoard.moveListStart[gameBoard.play + 1] = gameBoard.moveListStart[gameBoard.play];
 
-    var pieceType, pceNum, square, pceIndex, piece, t_square;
+    var pieceType, pceNum, square, pceIndex, piece, t_square, direction;
 
     ///white side
     if (gameBoard.side == PIECE_COLORS.WHITE)
@@ -157,5 +157,39 @@ function generateMoves() {
           }
         }
       }
+    }
+
+    //non-sliding pieces
+    pceIndex = loopNonSlideIndex[gameBoard.side];
+    piece = loopNonSlidePiece[pceIndex++];
+
+    while (piece != 0)
+    {
+      for (pceNum = 0; pceNum < gameBoard.pieceNum[piece]; pceNum++)
+      {
+        square = gameBoard.pieceList[pieceIndex(piece, pceNum)];
+
+        for (index = 0; index < directionNum[piece]; index++)
+        {
+          direction = pieceDirection[piece][index];
+          t_square = square + direction;
+
+          if(squareOffBoard(t_square) == BOOL.TRUE)
+          {
+            continue;
+          }
+
+          if (gameBoard.pieces[t_square] != PIECES.EMPTY)
+          {
+            if (PieceCol[gameBoard.pieces[t_square]] != gameBoard.side)
+            {
+              // add capture piece
+            }
+          } else {
+            //quiet move
+          }
+        }
+      }
+      piece = loopNonSlidePiece[pceIndex++];
     }
 }
