@@ -22,7 +22,7 @@ function generateMoves() {
 
     var pieceType, pceNum, square, pceIndex, piece, t_square, direction;
 
-    ///white side
+    //------------------------------------white side pawn and castle------------------------------------
     if (gameBoard.side == PIECE_COLORS.WHITE)
     {
       pieceType = PIECES.wP;
@@ -91,7 +91,7 @@ function generateMoves() {
         }
       }
     } else {
-      ///black side
+      //------------------------------------black side pawn and castle------------------------------------
       pieceType = PICES.bP;
 
       for (pceNum = 0; pceNum < gameBoard.pieceNum[pieceType]; pceNum++)
@@ -159,7 +159,7 @@ function generateMoves() {
       }
     }
 
-    //non-sliding pieces
+    //------------------------------------non-sliding pieces------------------------------------
     pceIndex = loopNonSlideIndex[gameBoard.side];
     piece = loopNonSlidePiece[pceIndex++];
 
@@ -191,5 +191,38 @@ function generateMoves() {
         }
       }
       piece = loopNonSlidePiece[pceIndex++];
+    }
+
+    //------------------------------------sliding pieces------------------------------------
+    pceIndex = loopSlideIndex[gameBoard.side];
+    piece = loopSlidePiece[pceIndex++];
+
+    while (piece != 0)
+    {
+      for (pceNum = 0; pceNum < gameBoard.pieceNum[piece]; pceNum++)
+      {
+        square = gameBoard.pieceList[pieceIndex(piece, pceNum)];
+
+        for (index = 0; index < directionNum[piece]; index++)
+        {
+          direction = pieceDirection[piece][index];
+          t_square = square + direction;
+
+          while (squareOffBoard(t_square) == BOOL.FALSE)
+          {
+            if (gameBoard.pieces[t_square] != PIECES.EMPTY)
+            {
+              if (PieceCol[gameBoard.pieces[t_square]] != gameBoard.side)
+              {
+                // add capture piece
+              }
+              break;
+            }
+            //add quiet move
+            t_sq += direction;
+          }
+        }
+      }
+      piece = loopSlidePiece[pceIndex++];
     }
 }

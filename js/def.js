@@ -61,6 +61,8 @@ var directionNum = [0 , 0, 8, 4, 4, 8, 8, 0, 8, 4, 4, 8, 8];
 var pieceDirection = [0, 0, knightDirection, bishopDirection, rookDirection, kingDirection, kingDirection, 0, knightDirection, bishopDirection, rookDirection, kingDirection, kingDirection];
 var loopNonSlidePiece = [PIECES.wN, PIECES.wK, 0, PIECES.bN, PIECES.bK, 0];
 var loopNonSlideIndex = [0, 3];
+var loopSlidePiece = [PIECES.wB, PIECES.wR, PIECES.wQ, 0, PIECES.bB, PIECES.bR, PIECES.bQ, 0];
+var loopSlideIndex = [0, 4];
 //PIECE * 120 + square for index
 var pieceKeys = new Array(14 * 120);
 //XOR in or out depending on which side (white or black)
