@@ -5,6 +5,7 @@ $(function()
   parseFen(START_FEN);
   printBoard();
   generateMoves();
+  printMoveList();
 });
 
 function initColumnsRowsBrd()
